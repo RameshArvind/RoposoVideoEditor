@@ -32,34 +32,34 @@
   {{videoName}}
 </button>
 <button class="button button-full icon-right ion-music-note button-positive" ng-click="openAudiofile()">
-  Choose an Audio File
+  {{audioName}}
 </button>
 <ion-list>
   <div class="item item-divider">
     Audio/Video modifications
   </div>
-  <ion-checkbox ng-disabled="VideofileStatus" ng-model="filter.yellow">Fade in Video at start and end</ion-checkbox>
-  <ion-checkbox ng-model="filter.pink">Fade in Audio at start and end</ion-checkbox>
+  <ion-checkbox ng-model="$parent.videoFade">Fade in Video at start and end</ion-checkbox>
+  <ion-checkbox ng-model="$parent.audioFade">Fade in Audio at start and end</ion-checkbox>
   <label class="item item-input item-select">
     <div class="input-label">
       Video playback rate
     </div>
-    <select>
-      <option>Double (2x)</option>
-      <option selected>Normal</option>
-      <option>Half (0.5x)</option>
+    <select ng-model="$parent.speed">
+      <option value="1" ng-selected="true">Normal</option>
+      <option value="2">Double (2x)</option>
+      <option value="0.5">Half (0.5x)</option>
     </select>
   </label>
   <div class="item range">
   <i class="icon ion-volume-low"></i>
-  <input type="range" name="volume">
+  <input ng-model="$parent.volumeVal" min="50" max="150" type="range" name="volume">
   <i class="icon ion-volume-high"></i>
 </div>
 </ion-list>
-<button class="button button-full icon-right ion-closed-captioning button-royal">
+<button ng-click="overlay()" class="button button-full icon-right ion-closed-captioning button-royal">
   Add an Overlay/Watermark
 </button>  
-<button ng-disabled="VideofileStatus" class="button button-full icon-right ion-fireball button-balanced" ng-click="confirmer()">
+<button ng-disabled="createVideoDisable()" class="button button-full icon-right ion-fireball button-balanced" ng-click="confirmer()">
   Create Video
 </button>
 </ion-content>
