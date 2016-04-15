@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic','ngCordova'])
-.controller('mainCtrl', function($scope,$ionicPopup,$cordovaProgress,$cordovaToast,$cordovaVibration) {
+.controller('mainCtrl', function($scope,$ionicPopup,$cordovaProgress,$cordovaToast,$cordovaVibration,$cordovaFileOpener2) {
   $scope.speed = 1;
   $scope.volumeVal = 100;
   $scope.audioFade = false;
@@ -19,7 +19,11 @@ angular.module('starter', ['ionic','ngCordova'])
   $scope.audioName = "Choose an Audio File";
   // $scope.$apply();
   $scope.overlay = function(){
-    $cordovaToast.showLongBottom($scope.volumeVal+" "+$scope.speed+" "+1/$scope.speed+" "+$scope.videoFade+" "+$scope.audioFade);
+    console.log($scope.volumeVal+" "+$scope.speed+" "+1/$scope.speed+" "+$scope.videoFade+" "+$scope.audioFade);
+    $cordovaToast.showLongBottom('This Feature is under development. Coming Soon!');
+  }
+  $scope.aboutUs = function(){
+        window.open('https://github.com/RameshArvind/RoposoVideoEditor', '_blank');
   }
   $scope.createVideoDisable = function(){
     return $scope.VideofileStatus || $scope.AudiofileStatus;
@@ -39,7 +43,6 @@ angular.module('starter', ['ionic','ngCordova'])
       $scope.videoURI = uri;
       function videoSuccess(info){
         $scope.VideofileStatus = false;
-        $cordovaVibration.vibrate(1000);
         $scope.videoName = "Current Video - "+uri.substring(uri.lastIndexOf("/")+1,uri.length);
         $scope.$apply();
         $scope.videoDuration = Math.round(info.duration);
@@ -80,45 +83,45 @@ angular.module('starter', ['ionic','ngCordova'])
 
       media.play();
       media.setVolume(0.0);
-          var counter = 0;
-    var timerDur = setInterval(function() {
+      var counter = 0;
+      var timerDur = setInterval(function() {
         counter = counter + 100;
         if(counter > 2000) {clearInterval(timerDur);}
         var duration = media.getDuration();
         if(duration > 0) {
           media.stop();
-            clearInterval(timerDur);
-            $scope.audioDuration = Math.round(duration);
-            console.log($scope.audioDuration + ' seconds');
+          clearInterval(timerDur);
+          $scope.audioDuration = Math.round(duration);
+          console.log($scope.audioDuration + ' seconds');
         }
-   }, 100);
+      }, 100);
       // media.play();
       // $cordovaToast.showLongBottom(" "+media.duration);
 
       
     });
-  };
+};
 
 
-  $scope.confirmer = function(){
-    $scope.progresspercent = 0;
-   var confirmPopup = $ionicPopup.confirm({
-     title: 'Creating Video',
-     template: 'Are you sure you want create this video?'
-   });
+$scope.confirmer = function(){
+  $scope.progresspercent = 0;
+  var confirmPopup = $ionicPopup.confirm({
+   title: 'Creating Video',
+   template: 'Are you sure you want create this video?'
+ });
 
-   confirmPopup.then(function(res) {
-     if(res) {
-      $cordovaProgress.showSimpleWithLabelDetail(true, "Creating Video","This might take a while..");
+  confirmPopup.then(function(res) {
+   if(res) {
+    $cordovaProgress.showSimpleWithLabelDetail(true, "Creating Video","This might take a while..");
       // $cordovaProgress.hide();
       $scope.videoURI.replace("file://","");
       var duration = 0;
 
       function onVideoEditorProgress(info) {
-    if (!duration) {
-      var matches = (info) ? info.match(/Duration: (.*?), start:/) : [];
-      if (matches && matches.length > 0) {
-        var rawDuration = matches[1];
+        if (!duration) {
+          var matches = (info) ? info.match(/Duration: (.*?), start:/) : [];
+          if (matches && matches.length > 0) {
+            var rawDuration = matches[1];
             // convert rawDuration from 00:00:00.00 to seconds.
             var ar = rawDuration.split(":").reverse();
             duration = parseFloat(ar[0]);
@@ -166,17 +169,39 @@ angular.module('starter', ['ionic','ngCordova'])
       $cordovaProgress.hide();
       // $cordovaToast.showLongBottom('execFFMPEG success'+outputfile+" "+$scope.videoURI.replace("file://","")+"  "+result);
       function success(){
+        $cordovaVibration.vibrate(1000);
+        $cordovaToast.showLongBottom('Creation of Video Complete');
         console.log("Exists"+result);
+        // VideoPlayer.play(outputfile);
+        var confirmPlayPopup = $ionicPopup.confirm({
+         title: 'Play Video',
+         template: 'Would you like to play the created video?'
+       });
+        confirmPlayPopup.then(function(res){
+          if(res){
+            $cordovaFileOpener2.open(
+              outputfile.replace("file://",""),
+              'video/*'
+              ).then(function() {
+                console.log('Success');
+              }, function(err) {
+                console.log('An error occurred: ' + JSON.stringify(err));
+              });
+            }
+          });
+
       }
       function fail(){
-        $cordovaToast.showShortBottom('ffmpegError, err: ' + err);
+        $cordovaVibration.vibrate(1000);
+        $cordovaToast.showShortBottom('Video Creation failed!');
         console.log("Doesnt"+result);
       }
       window.resolveLocalFileSystemURL("file://"+outputfile, success, fail);
     }
 
     function ffmpegError(err) {
-      $cordovaToast.showShortBottom('ffmpegError, err: ' + err);
+      $cordovaVibration.vibrate(1000);
+      $cordovaToast.showShortBottom('Video Creation failed ffmpegError, err: ' + err);
     }
     command = ['-y','-i',$scope.videoURI.replace("file://",""),'-i',$scope.audioURI.replace("file://","")];
     // ,'-vf','fade=in:0:d=3,fade=out:st='+($scope.videoDuration-3)+':d=3,setpts='+1/$scope.speed+'*PTS','-af','afade=t=in:ss=0:d=3,afade=t=out:st='+($scope.audioDuration-3)+':d=3,atempo='+$scope.speed+',volume='+($scope.volumeVal)/100,'-shortest',outputfile
@@ -207,8 +232,8 @@ angular.module('starter', ['ionic','ngCordova'])
           );
     // $cordovaToast.showShortBottom('You are sure');
   } else {
-    }
-  });
+  }
+});
 };
 
 })
