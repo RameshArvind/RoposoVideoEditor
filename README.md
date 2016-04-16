@@ -15,6 +15,7 @@ Choose an audio and video file by clicking the appropriate buttons and choose th
 - 'Fade in Video at start and end' causes the video to fade as stated for 3 seconds at the start and end.
 - 'Video playback rate' has three options to speed/slow down the video. The audio is also appropriately slowed.
 - The volume control is present to control the target audio volume. The lowest value causes the target video to have 50% of the audio file's volume while max causes it to have 150% of it.
+- In case the audio or video are not of same duration, the target video is as long as the shorter of the two. The remaining portion is cut off.
 
 ## Design
 The application was designed to be done on a single screen as complex editing done on a mobile phone could be tedious work, even if the platform supported it. For simple video editing such as filters and adding audio, ffmpeg comes to mind. This project uses the android ffmpeg port. Since users who upload such videos are usually viners or say fashion designers who want to just showcase their recorded video with some music for aesthetics, it is beneficial for the app to be minimalistic. Thus the app was designed as a single page application.
