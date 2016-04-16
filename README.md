@@ -23,6 +23,6 @@ The application was designed to be done on a single screen as complex editing do
 - [x] Add ffmpeg functionality to the app (finish up core features)
 - [x] Upload apk and media files to a public server ex Google Drive
 - [ ] Add Overlay Functionality
-- [ ] Add screenshots of app to Git repo
+- [x] Add screenshots of app to Git repo
 - [ ] Add instructions on how to install app from source
-- [ ] Add basic desription on design choices taken to make the app (i.e why the app is fully completed on one screen over having multiple views).
+- [x] Add basic desription on design choices taken to make the app (i.e why the app is fully completed on one screen over having multiple views).
