@@ -19,10 +19,14 @@ Choose an audio and video file by clicking the appropriate buttons and choose th
 ## Design
 The application was designed to be done on a single screen as complex editing done on a mobile phone could be tedious work, even if the platform supported it. For simple video editing such as filters and adding audio, ffmpeg comes to mind. This project uses the android ffmpeg port. Since users who upload such videos are usually viners or say fashion designers who want to just showcase their recorded video with some music for aesthetics, it is beneficial for the app to be minimalistic. Thus the app was designed as a single page application.
 
+## Known Bugs
+The progress dialog is not persistent, so in case you click the progress indicator or outside it, it disappears. This however does not cause the current video creation to stop, it continues to to run in the background and you will be notified once it is complete.
+
 ## TODO
 - [x] Add ffmpeg functionality to the app (finish up core features)
 - [x] Upload apk and media files to a public server ex Google Drive
 - [ ] Add Overlay Functionality
+- [ ] Fix Progress indicator
 - [x] Add screenshots of app to Git repo
 - [ ] Add instructions on how to install app from source
 - [x] Add basic desription on design choices taken to make the app (i.e why the app is fully completed on one screen over having multiple views).
