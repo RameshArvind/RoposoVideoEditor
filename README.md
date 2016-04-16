@@ -4,6 +4,11 @@ This repository consists of a video editing tool built primarily for android on 
 ## Google Drive link to Files
 You can find the APK, Sample Video and Sample Audio clips [here](https://drive.google.com/folderview?id=0B325xi9X7oeXa04zTWF0MGdzWG8&usp=sharing).
 
+## Screenshots
+<img src="Screenshot_2016-04-16-05-34-23_com.ionicframework.roposovideo767419.png" width="250"/>
+<img src="Screenshot_2016-04-16-05-35-52_com.ionicframework.roposovideo767419.png" width="250"/>
+<img src="Screenshot_2016-04-16-05-36-09_com.ionicframework.roposovideo767419.png" width="250"/>
+
 ## Simple HOW-TO
 Choose an audio and video file by clicking the appropriate buttons and choose the filters you wish to apply
 - 'Fade in Audio at start and end' causes the audio to fade as stated for 3 seconds at the start and end.
